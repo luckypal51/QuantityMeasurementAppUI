@@ -1,0 +1,116 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Background */
+body {
+    background-color: #808080;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container */
+.main-container {
+    display: flex;
+    width: 850px;
+    height: 500px;
+}
+
+/* LEFT BOX */
+.left-box {
+    width: 50%;
+    background: #f4f4f4;
+    border-radius: 20px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.left-box img {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.left-box h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* RIGHT BOX */
+.right-box {
+    width: 50%;
+    background: white;
+    border-radius: 0 20px 20px 0;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tabs span {
+    font-size: 18px;
+    color: gray;
+    cursor: pointer;
+}
+
+.tabs .active {
+    color: black;
+    border-bottom: 3px solid #a52a2a;
+    padding-bottom: 5px;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+/* Label */
+.form-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Input */
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Button */
+button {
+    padding: 12px;
+    background-color: #a52a2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #8b1e1e;
+}

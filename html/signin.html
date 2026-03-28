@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login / Signup</title>
+    <link rel="stylesheet" href="../css/signin.css">
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- LEFT SIDE -->
+    <div class="left-box">
+        <img src="weight.png.png" alt="app image">
+        <h3>Quantity Measurement App</h3>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-box">
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <span id="loginTab">LOGIN</span>
+            <span id="signupTab" class="active">SIGNUP</span>
+        </div>
+
+        <form>
+
+            <!-- SIGNUP FORM -->
+            <div id="signupForm">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text"id="name">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Id</label>
+                    <input type="email" id="email">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password">
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="text" id="mobile">
+                </div>
+
+                <button type="submit" onclick="signup()">Signup</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm" style="display: none;">
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword">
+                </div>
+
+                <button type="submit" onclick="login(event)">Login</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="/js/signin.js"></script>
+</body>
+</html>
