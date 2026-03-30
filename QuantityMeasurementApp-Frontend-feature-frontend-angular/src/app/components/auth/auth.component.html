@@ -1,0 +1,27 @@
+<div class="from-container">
+    <div class="choose-option">
+        <button [class.active]="isLoginMode" (click)="isLoginMode = true">Login</button>
+        <button [class.active]="!isLoginMode" (click)="isLoginMode = false">Signup</button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="f-group" *ngIf="!isLoginMode">
+            <label>Username</label>
+            <input type="text" [(ngModel)]="authData.username" name="username" required>
+        </div>
+        <div class="f-group">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="authData.email" name="email" required>
+        </div>
+        <div class="f-group">
+            <label>Password</label>
+            <input type="password" [(ngModel)]="authData.password" name="password" required>
+        </div>
+        <div class="f-group" *ngIf="!isLoginMode">
+            <label>Confirm Password</label>
+            <input type="password" [(ngModel)]="authData.confirmPassword" name="confirmPassword" required>
+        </div>
+            <div *ngIf="errorMessage" class="error-alert">{{ errorMessage }}</div>
+        <button type="submit" class="submit-btn">{{ isLoginMode ? 'Login' : 'Create Account' }}</button>
+    </form>
+</div>
