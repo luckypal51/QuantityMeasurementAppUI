@@ -14,41 +14,81 @@ import { Router } from '@angular/router';
 export class AuthComponent {
   isLoginMode = true;
   errorMessage = '';
+  successMessage = '';
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  authData = { username: '', email: '', password: '', confirmPassword: ''};
+  authData = { username: '', email: '', password: '', confirmPassword: '' };
 
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.errorMessage = '';
+    this.successMessage = '';
   }
 
   onSubmit() {
-    if (!this.isLoginMode && this.authData.password !== this.authData.confirmPassword) {
-      this.errorMessage = "Passwords do not match!";
+    // Validate form
+    if (!this.authData.email || !this.authData.password) {
+      this.errorMessage = "Email and password are required!";
       return;
     }
 
-    const request = this.isLoginMode 
-      ? this.authService.login({email: this.authData.email, password: this.authData.password})
-      : this.authService.register(this.authData);
-
-    request.subscribe({
-      next: (res) => {
-        console.log('Auth response:', res);
-        if (this.isLoginMode) {
-          this.router.navigate(['/dashboard']);
-        }
-        else { 
-          alert('Signup Successful! Please Login.'); 
-          this.isLoginMode = true; 
-        }
-      },
-      error: (err) => {
-        console.error('Auth error:', err);
-        this.errorMessage = err.error?.message || err.message || "An error occurred. Please try again.";
+    if (!this.isLoginMode) {
+      // Signup mode
+      if (!this.authData.username) {
+        this.errorMessage = "Username is required!";
+        return;
       }
-    });
+      
+      if (this.authData.password !== this.authData.confirmPassword) {
+        this.errorMessage = "Passwords do not match!";
+        return;
+      }
+
+      // Send User object for signup
+      const signupData = {
+        username: this.authData.username,
+        email: this.authData.email,
+        password: this.authData.password
+      };
+
+      this.authService.register(signupData).subscribe({
+        next: (res) => {
+          console.log('Signup successful');
+          this.successMessage = 'Signup successful! Redirecting to login...';
+          setTimeout(() => {
+            this.isLoginMode = true;
+            this.authData = { username: '', email: '', password: '', confirmPassword: '' };
+            this.successMessage = '';
+          }, 2000);
+        },
+        error: (err) => {
+          console.error('Signup error:', err);
+          this.errorMessage = err.error?.message || err.message || "Signup failed. Please try again.";
+        }
+      });
+
+    } else {
+      // Login mode
+      // Send AuthDtoRequest for signin
+      const loginData = {
+        email: this.authData.email,
+        password: this.authData.password
+      };
+
+      this.authService.login(loginData).subscribe({
+        next: (token) => {
+          console.log('Login successful, token:', token);
+          this.successMessage = 'Login successful! Redirecting...';
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000);
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+          this.errorMessage = err.error?.message || err.message || "Login failed. Invalid credentials.";
+        }
+      });
+    }
   }
 }

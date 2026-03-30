@@ -8,37 +8,18 @@ import { throwError } from 'rxjs';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = '/api/v1/auth';
+  private apiUrl = 'http://localhost:8080/api/v1/auth';
 
-  private extractToken(response: any): string | null {
-    // Try multiple token field names
-    if (response?.token) return response.token;
-    if (response?.data?.token) return response.data.token;
-    if (response?.accessToken) return response.accessToken;
-    if (response?.access_token) return response.access_token;
-    if (response?.jwtToken) return response.jwtToken;
-    
-    // If response is a string (raw token), return it
-    if (typeof response === 'string') return response;
-    
-    return null;
-  }
-
-  register(userData: any): Observable<any> {
+  // Signup - expects User object, returns token as string
+  register(userData: any): Observable<string> {
     console.log('Sending signup request to:', `${this.apiUrl}/signup`);
     return this.http.post(`${this.apiUrl}/signup`, userData, { responseType: 'text' }).pipe(
-      tap((res: any) => {
-        console.log('Signup raw response:', res);
-        // Try to parse if it's a string
-        let parsedRes = res;
-        if (typeof res === 'string') {
-          try {
-            parsedRes = JSON.parse(res);
-          } catch (e) {
-            console.error('Failed to parse signup response as JSON:', e);
-          }
+      tap((token: string) => {
+        console.log('Signup response:', token);
+        if (token && token.trim()) {
+          localStorage.setItem('token', token.trim());
+          console.log('✓ Token saved successfully');
         }
-        console.log('Signup parsed response:', parsedRes);
       }),
       catchError((error: any) => {
         console.error('Signup error:', error);
@@ -47,27 +28,15 @@ export class AuthService {
     );
   }
 
-  login(credentials: any): Observable<any> {
+  // Signin - expects AuthDtoRequest, returns token as string
+  login(credentials: any): Observable<string> {
     console.log('Sending login request to:', `${this.apiUrl}/signin`);
     return this.http.post(`${this.apiUrl}/signin`, credentials, { responseType: 'text' }).pipe(
-      tap((res: any) => {
-        console.log('Raw response:', res);
-        // Try to parse if it's a string
-        let parsedRes = res;
-        if (typeof res === 'string') {
-          try {
-            parsedRes = JSON.parse(res);
-          } catch (e) {
-            console.error('Failed to parse response as JSON:', e);
-          }
-        }
-        
-        const token = this.extractToken(parsedRes);
-        if (token) {
-          localStorage.setItem('token', token);
+      tap((token: string) => {
+        console.log('Login response:', token);
+        if (token && token.trim()) {
+          localStorage.setItem('token', token.trim());
           console.log('✓ Token saved successfully');
-        } else {
-          console.warn('⚠ Token not found in response:', parsedRes);
         }
       }),
       catchError((error: any) => {

@@ -8,6 +8,14 @@ body {
     margin: 0;
 }
 
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
 .from-container {
     background-color: white;
     padding: 25px;
@@ -112,6 +120,17 @@ input {
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #fab1a0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success-alert {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
     margin-bottom: 20px;
     text-align: center;
     font-weight: bold;
