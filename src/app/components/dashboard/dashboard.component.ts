@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
 
     const actionUrl = this.isArithmeticMode ? this.calc.operator : this.selectedAction;
     
-    this.http.post(`http://localhost:8080/api/v1/quantities/${actionUrl}`, body)
+    this.http.post(`${environment.apiUrl}/quantities/${actionUrl}`, body)
       .subscribe({
         next: (res) => this.result = res,
         error: (err) => this.error = "Measurement failed: " + (err.error?.message || "Server Error")

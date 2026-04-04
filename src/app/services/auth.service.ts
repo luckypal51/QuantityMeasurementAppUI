@@ -3,12 +3,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, catchError } from 'rxjs';
 import { throwError } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = 'http://localhost:8080/api/v1/auth';
+  private apiUrl = environment.apiUrl + '/auth';
 
   // Signup - expects User object, returns token as string
   register(userData: any): Observable<string> {
